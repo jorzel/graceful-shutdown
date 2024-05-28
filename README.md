@@ -1,2 +1,2 @@
 # graceful-shutdown
-How to performa a graceful shutdown in the service
+How to perform a graceful shutdown in the service
