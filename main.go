@@ -29,7 +29,7 @@ func main() {
 	listener := NewFileListener(watcher, FileHandler{})
 	go listener.Start(ctx, "./")
 
-	// graceful shutdown
+	//graceful shutdown
 	terminateSignal := make(chan os.Signal, 1)
 	signal.Notify(terminateSignal, os.Interrupt, syscall.SIGTERM, syscall.SIGINT, syscall.SIGHUP)
 
@@ -135,7 +135,9 @@ func configureLogger(logLevel string) (zerolog.Logger, error) {
 		)
 	}
 
-	zerolog.TimeFieldFormat = zerolog.TimeFormatUnixMs
+	zerolog.TimestampFunc = func() time.Time {
+		return time.Now().UTC()
+	}
 	zerolog.SetGlobalLevel(parsed)
-	return zerolog.New(os.Stderr).With().Caller().Timestamp().Logger(), nil
+	return zerolog.New(os.Stderr).With().Timestamp().Logger(), nil
 }
